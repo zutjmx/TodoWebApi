@@ -1,5 +1,6 @@
 // program.cs
 using TodoAPI.AppDataContext;
+using TodoAPI.Middleware;
 using TodoAPI.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,11 +11,20 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Add  This to in the Program.cs file
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());  // Add this line
 
 // Add  This to in the Program.cs file
 builder.Services.Configure<DbSettings>(builder.Configuration.GetSection("DbSettings")); // Add this line
 builder.Services.AddSingleton<TodoDbContext>(); // Add this line
 
+
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>(); // Add this line
+
+builder.Services.AddProblemDetails();  // Add this line
+
+// Adding of login 
+builder.Services.AddLogging();  //  Add this line
 
 var app = builder.Build();
 
