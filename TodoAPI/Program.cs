@@ -1,7 +1,9 @@
 // program.cs
 using TodoAPI.AppDataContext;
+using TodoAPI.Interfaces;
 using TodoAPI.Middleware;
 using TodoAPI.Models;
+using TodoAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +27,8 @@ builder.Services.AddProblemDetails();  // Add this line
 
 // Adding of login 
 builder.Services.AddLogging();  //  Add this line
+
+builder.Services.AddScoped<ITodoServices, TodoServices>();
 
 var app = builder.Build();
 
